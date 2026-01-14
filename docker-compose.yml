@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data.db
+      - ALLOWED_TELEGRAM_USER_ID=replace_me
+    volumes:
+      - ./data.db:/app/data.db
