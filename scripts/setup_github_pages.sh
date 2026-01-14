@@ -12,10 +12,11 @@ if [[ -z "${repo}" ]]; then
   exit 1
 fi
 
+pages_args=(-f build_type=workflow -f source[branch]=main -f source[path]=/)
 if gh api "repos/${repo}/pages" >/dev/null 2>&1; then
-  gh api -X PUT "repos/${repo}/pages" -f source=workflow >/dev/null
+  gh api -X PUT "repos/${repo}/pages" "${pages_args[@]}" >/dev/null
 else
-  gh api -X POST "repos/${repo}/pages" -f source=workflow >/dev/null
+  gh api -X POST "repos/${repo}/pages" "${pages_args[@]}" >/dev/null
 fi
 
 echo "GitHub Pages source set to GitHub Actions for ${repo}."
