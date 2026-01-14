@@ -29,6 +29,16 @@ docker compose up --build
 - `ALLOWED_TELEGRAM_USER_ID` — разрешённый ID пользователя Telegram (если не задан, доступ открыт).
 - `DATABASE_URL` — URL базы SQLite.
 
+### Где взять значения переменных
+* `ALLOWED_TELEGRAM_USER_ID`: откройте бота @userinfobot и отправьте ему любое сообщение — он пришлёт ваш user id. Используйте его для ограничения доступа.
+* `DATABASE_URL`: по умолчанию можно не задавать (будет использован SQLite файл в проекте). Если нужно явно указать, используйте формат `sqlite:///./app.db` для файла рядом с сервером. При использовании Docker укажите путь внутри контейнера, например `sqlite:///./data/app.db` и примонтируйте том. 
+
+Пример `.env` для локального запуска:
+```dotenv
+ALLOWED_TELEGRAM_USER_ID=123456789
+DATABASE_URL=sqlite:///./app.db
+```
+
 ## Настройка Telegram Bot и WebApp
 1. Создайте бота через **@BotFather** и получите токен.
 2. Создайте кнопку WebApp:
@@ -56,6 +66,13 @@ docker compose up --build
    ```
    Скрипт переключит Pages на GitHub Actions и создаст переменную `PHX_API_BASE_URL`.
 3. В Telegram BotFather укажите GitHub Pages URL в настройках WebApp.
+
+### Где задаётся PHX_API_BASE_URL
+`PHX_API_BASE_URL` — это **репозиторная переменная** GitHub (Actions Variable), а не секрет. Её можно задать двумя способами:
+1. Скриптом: `./scripts/setup_github_pages.sh --api-base https://your-api.example.com` (автоматически создаёт/обновляет переменную).
+2. Вручную: **GitHub → Settings → Secrets and variables → Actions → Variables** → `New repository variable` → имя `PHX_API_BASE_URL`.
+
+Если API на том же домене (редкий случай), переменную можно не задавать — фронтенд будет обращаться к относительным `/api/...`.
 
 ### Как будут обновляться страницы
 * Каждый `git push` в `main` автоматически запускает workflow `Deploy GitHub Pages`.
