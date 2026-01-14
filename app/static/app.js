@@ -1,5 +1,6 @@
 const app = document.getElementById("app");
 const navButtons = document.querySelectorAll("nav button[data-view]");
+const API_BASE = (window.PHX_API_BASE_URL || "").replace(/\/$/, "");
 
 const SCENARIOS = {
   gtg: { label: "ГТГ / Круги", accent: "#58c4dd" },
@@ -39,13 +40,21 @@ function getUserHeaders() {
   return userId ? { "X-Telegram-User-Id": String(userId) } : {};
 }
 
+function buildApiUrl(path) {
+  if (!API_BASE) return path;
+  if (path.startsWith("/")) {
+    return `${API_BASE}${path}`;
+  }
+  return `${API_BASE}/${path}`;
+}
+
 async function api(path, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...getUserHeaders(),
     ...(options.headers || {}),
   };
-  const response = await fetch(path, { ...options, headers });
+  const response = await fetch(buildApiUrl(path), { ...options, headers });
   if (!response.ok) {
     throw new Error("API error");
   }
