@@ -45,6 +45,25 @@ docker compose up --build
 2. Настройте внешний доступ (Nginx / reverse proxy, HTTPS).
 3. Укажите публичный HTTPS URL в BotFather как WebApp URL.
 
+## GitHub Pages для фронтенда
+Фронтенд можно публиковать отдельно на GitHub Pages, а API оставить на вашем сервере.
+
+### Одноразовая настройка
+1. Убедитесь, что вы используете ветку `main`.
+2. Включите GitHub Pages через скрипт (нужен `gh`):
+   ```bash
+   ./scripts/setup_github_pages.sh --api-base https://your-api.example.com
+   ```
+   Скрипт переключит Pages на GitHub Actions и создаст переменную `PHX_API_BASE_URL`.
+3. В Telegram BotFather укажите GitHub Pages URL в настройках WebApp.
+
+### Как будут обновляться страницы
+* Каждый `git push` в `main` автоматически запускает workflow `Deploy GitHub Pages`.
+* Workflow копирует `app/static` в артефакт Pages и подставляет `PHX_API_BASE_URL` в `static/config.js`.
+* Ручных действий после этого не требуется: обновления публикуются автоматически после мержа в `main`.
+
+Если API размещён на том же домене, переменную `PHX_API_BASE_URL` можно оставить пустой.
+
 ## Структура проекта
 ```
 app/
