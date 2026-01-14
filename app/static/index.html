@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PHXBody Log</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: "var(--tg-theme-bg-color, #0d0f12)",
+            card: "var(--tg-theme-secondary-bg-color, #161b22)",
+            accent: "#5bd3c7",
+            ink: "var(--tg-theme-text-color, #f8fafc)",
+            muted: "var(--tg-theme-hint-color, #94a3b8)",
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            card: "0 20px 40px rgba(15, 23, 42, 0.25)",
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-base text-ink min-h-screen">
+  <div id="app" class="max-w-md mx-auto px-4 pb-24"></div>
+
+  <nav class="fixed bottom-4 left-0 right-0 px-4">
+    <div class="max-w-md mx-auto bg-card shadow-card rounded-2xl px-4 py-3 flex items-center justify-between">
+      <button data-view="home" class="text-sm font-medium text-ink">Сегодня</button>
+      <button data-view="add" class="text-sm font-medium text-ink">Добавить</button>
+      <button data-view="history" class="text-sm font-medium text-ink">История</button>
+      <button data-view="analytics" class="text-sm font-medium text-ink">Аналитика</button>
+    </div>
+  </nav>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

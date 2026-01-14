@@ -1,0 +1,15 @@
+[project]
+name = "phxbody-bot"
+version = "0.1.0"
+description = "Telegram WebApp for structured workout logging"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "sqlalchemy>=2.0.32",
+    "pydantic>=2.8.2",
+    "python-multipart>=0.0.9",
+]
+
+[tool.uv]
+package = false
